@@ -131,41 +131,42 @@ fun foo1(x?) = if x is undefined then 0 else x + 1
 //│ Parsed: fun foo1 = (x,) => if (is(x, undefined,)) then 0 else +(x, 1,);
 //│ fun foo1: ((Int | ())?) -> Int
 
+foo1()
+//│ Int
+//│ res
+//│     = 0
+
 foo1(2)
 //│ Int
 //│ res
 //│     = 3
 
+
+
+// Error???
 fun foo0(x?:Int) = x + 1
 //│ fun foo0: (x: (Int)?) -> Int
+
+foo0(1)
+//│ Int
+//│ res
+//│     = 2
+
+foo0()
+//│ Int
+//│ res
+//│     = NaN
 
 :e
 fun foo1(x?) = x + 1
 //│ ╔══[ERROR] Type mismatch in operator application:
-//│ ║  l.143: 	fun foo1(x?) = x + 1
+//│ ║  l.161: 	fun foo1(x?) = x + 1
 //│ ║         	               ^^^^^
 //│ ╟── reference of type `()` is not an instance of type `Int`
-//│ ║  l.143: 	fun foo1(x?) = x + 1
+//│ ║  l.161: 	fun foo1(x?) = x + 1
 //│ ╙──       	               ^
 //│ fun foo1: ((Int | ())?) -> (Int | error)
 
 
 fun foo(x?) = if x is undefined then 0 else x + 1
 //│ fun foo: ((Int | ())?) -> Int
-
-
-fun foo: (x: Int) -> Int
-fun foo(x?) = if x is undefined then 0 else x + 1
-//│ fun foo: ((Int | ())?) -> Int
-//│ fun foo: (x: Int) -> Int
-
-fun foo: (x: Int?) -> Int
-fun foo(x) = x + 1
-//│ fun foo: Int -> Int
-//│ fun foo: (x: (Int)?) -> Int
-
-fun f(x) = (x : [Int, Int?]) : ['a, 'b]
-//│ fun f: ([Int, (Int)?]) -> [Int, Int]
-
-fun f(x) = (x : [Int, Int?]) : ['a, 'b]
-//│ fun f: ([Int, (Int)?]) -> [Int, Int]
